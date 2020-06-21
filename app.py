@@ -1,20 +1,15 @@
 import discord
+from discord.ext import commands
 import config
 
-client = discord.Client()
+bot = commands.Bot(command_prefix='!', case_insensitive=True)
 
-prefix = '!'
-
-@client.event
+@bot.event
 async def on_ready():
-    print('Successfully logged in as {0.user}'.format(client))
+    print('Successfully logged in as {0.user}'.format(bot))
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+@bot.command()
+async def ping(ctx):
+    await ctx.send('pong')
 
-    if message.content.startswith(prefix + 'ping'):
-        await message.channel.send('pong')
-
-client.run(config.token)
+bot.run(config.token)
