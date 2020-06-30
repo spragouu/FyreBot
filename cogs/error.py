@@ -11,7 +11,7 @@ class Error(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         #React to a command that had an error with ❌
-        await ctx.message.add_reaction('\U0000274C')
+        await ctx.message.add_reaction('❌')
 
         #Post traceback to console
         print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
