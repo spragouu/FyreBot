@@ -28,21 +28,21 @@ for cog in initCogs:
 #Manually load a cog
 @bot.command()
 async def load(ctx, extension):
-    """Load a cog"""
+    """Load a specific cog"""
     bot.load_extension(f'cogs.{extension}')
     await ctx.message.add_reaction('✅')
     
 #Manually unload a cog
 @bot.command()
 async def unload(ctx, extension):
-    """Unload a cog"""
+    """Unload a specific cog"""
     bot.unload_extension(f'cogs.{extension}')
     await ctx.message.add_reaction('✅')
 
 #Manually reload a cog
 @bot.command()
 async def reload(ctx, extension):
-    """Reload a cog"""
+    """Reload a specific cog"""
     bot.unload_extension(f'cogs.{extension}')
     bot.load_extension(f'cogs.{extension}')
     await ctx.message.add_reaction('✅')
