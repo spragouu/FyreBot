@@ -6,7 +6,7 @@ class Events(commands.Cog):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_member_join(self, member):.
+    async def on_member_join(self, member):
         embed = discord.Embed(title=f'Welcome to {member.guild.name}!', color=0xbe5f00, description='Thanks for joining us!')
         embed.set_footer(icon_url=self.bot.user.avatar_url)
         embed.set_author(name=f'{member.name}#{member.discriminator}', icon_url=member.avatar_url)
