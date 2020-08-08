@@ -25,19 +25,22 @@ for cog in initCogs:
         else:
             print('✅ All cogs successfully loaded')
 
+#Add ✅ reaction after a command was completed
+@bot.event
+async def on_command_completion(ctx):
+    await ctx.message.add_reaction('✅')
+
 #Manually load a cog
 @bot.command()
 async def load(ctx, extension):
     """Load a specific cog"""
     bot.load_extension(f'cogs.{extension}')
-    await ctx.message.add_reaction('✅')
     
 #Manually unload a cog
 @bot.command()
 async def unload(ctx, extension):
     """Unload a specific cog"""
     bot.unload_extension(f'cogs.{extension}')
-    await ctx.message.add_reaction('✅')
 
 #Manually reload a cog
 @bot.command()
@@ -45,7 +48,6 @@ async def reload(ctx, extension):
     """Reload a specific cog"""
     bot.unload_extension(f'cogs.{extension}')
     bot.load_extension(f'cogs.{extension}')
-    await ctx.message.add_reaction('✅')
 
 #Log bot into discord
 bot.run(config.token)
