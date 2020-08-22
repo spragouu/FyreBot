@@ -1,14 +1,22 @@
 import discord
 from discord.ext import commands
+from db import is_in_database, dbupdate
 import config
 
 bot = commands.Bot(command_prefix='!', case_insensitive=True)
-initCogs = ['cogs.error'] #All default cogs that load on startup
+initCogs = ['cogs.error', 'cogs.events'] #All default cogs that load on startup
 
-#Send confirmation message when logged into discord
+#Event for when the bot comes online
 @bot.event
 async def on_ready():
+    #Send a message when the comes online
     print('✅ Successfully logged in as {0.user}'.format(bot))
+
+    #Verify all servers the bot is in are in the DB
+    for guild in bot.guilds:
+        if not await is_in_database(sql=f'SELECT server FROM servers WHERE Server={guild.id}'):
+            await dbupdate('main.db', 'INSERT INTO servers (server, name) VALUES (?, ?)', (guild.id, guild.name))
+            print(f'{guild.name} added to db!')
 
 #Load all default cogs
 counter = 0
@@ -22,8 +30,8 @@ for cog in initCogs:
     else:
         if counter > 0:
             break
-        else:
-            print('✅ All cogs successfully loaded')
+if counter == 0:
+    print('✅ all cogs loaded successfully')
 
 #Add ✅ reaction after a command was completed
 @bot.event
