@@ -17,9 +17,8 @@ class Error(commands.Cog):
         print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
         traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
-        #test post in discord channel
+        #Post error in ctx channel
         error = getattr(error, 'original', error)
-
         await ctx.send(f"```❌ Error Detected:\n    ↪️ {error}```")
 
 def setup(bot):
