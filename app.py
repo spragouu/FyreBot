@@ -4,7 +4,7 @@ from db import is_in_database, dbupdate
 import config
 
 bot = commands.Bot(command_prefix='!', case_insensitive=True)
-initCogs = ['cogs.error', 'cogs.events'] #All default cogs that load on startup
+initCogs = ['cogs.error', 'cogs.events', 'cogs.moderation'] #All default cogs that load on startup
 
 #Event for when the bot comes online
 @bot.event
