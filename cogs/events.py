@@ -14,6 +14,9 @@ class Events(commands.Cog):
         await dbupdate('main.db', 'INSERT INTO servers (server, name) VALUES (?, ?)', (guild.id, guild.name))
         print(f'{guild.name} added to DB')
     
-
+    @commands.Cog.listener()
+    async def on_guild_update(self, guildOLD, guildNEW):
+        if guildNEW.name != guildOLD.name:
+            await dbupdate('main.db', 'UPDATE servers SET name=? WHERE server=?', (guildNEW.name, guildNEW.id))
 def setup(bot):
     bot.add_cog(Events(bot))
