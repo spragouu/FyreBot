@@ -13,6 +13,14 @@ class Events(commands.Cog):
     async def on_guild_join(self, guild):
         await dbupdate('main.db', 'INSERT INTO servers (server, name) VALUES (?, ?)', (guild.id, guild.name))
         print(f'{guild.name} added to DB')
+
+    @commands.Cog.listener()
+    async def on_member_join(self, member):
+        await member.guild.system_channel.send(f'Welcome {member.mention} to {member.guild.name}')
+
+    @commands.Cog.listener()
+    async def on_member_remove(self, member):
+        await member.guild.system_channel.send(f'{member.mention} has left {member.guild.name}')
     
     @commands.Cog.listener()
     async def on_guild_update(self, guildOLD, guildNEW):

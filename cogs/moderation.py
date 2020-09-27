@@ -2,6 +2,8 @@ import discord
 from db import dbupdate, dbselect
 from discord.ext import commands
 from discord.utils import get, find
+from cogs.log import *
+
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
@@ -18,23 +20,50 @@ class Moderation(commands.Cog):
     #ban user
     @commands.command()
     @permissions(ban_members = True)
-    async def ban(self, ctx, user: discord.User):
-        await ctx.guild.ban(user)
-        await ctx.send(f'{user} has been banned')
+    async def ban(self, ctx, bannedUser: discord.User, *reasonForBan):
+        for e in await ctx.guild.bans():
+            if e.user == bannedUser:
+                raise Exception(f'{bannedUser} is already banned')
+
+        formattedReason = ' '.join(reasonForBan)
+        if not formattedReason:
+            formattedReason = 'None Provided'
+
+        await ctx.guild.ban(bannedUser, reason = formattedReason)
+        await ctx.send(f'{bannedUser.mention} has been banned')
+        await member_ban(ctx.guild, bannedUser, ctx.message.author, formattedReason)
         
     #unban user
     @commands.command()
     @permissions(ban_members = True)
-    async def unban(self, ctx, user: discord.User):
-        await ctx.guild.unban(user)
-        await ctx.send(f'{user} has been unbanned')
+    async def unban(self, ctx, unbannedUser: discord.User, *reasonForUnban):
+        for e in await ctx.guild.bans():
+            if e.user == unbannedUser:
+                formattedReason = ' '.join(reasonForUnban)
+                if not formattedReason:
+                    formattedReason = 'None Provided'
+
+                await ctx.guild.unban(unbannedUser, reason = formattedReason)
+                await ctx.send(f'{unbannedUser.mention} has been unbanned')
+                await member_unban(ctx.guild, unbannedUser, ctx.message.author, formattedReason)
+                return   
+        
+        raise Exception(f'{unbannedUser} is not banned')
 
     #kick user
     @commands.command()
     @permissions(kick_members = True)
-    async def kick(self, ctx, user: discord.User):
-        await ctx.guild.kick(user)
-        await ctx.send(f'{user} has been kicked')
+    async def kick(self, ctx, kickedUser: discord.User, *reasonForKick):
+        if kickedUser in ctx.guild.members:
+            formattedReason = ' '.join(reasonForKick)
+            if not formattedReason:
+                formattedReason = 'None Provided'
+
+            await ctx.guild.kick(kickedUser)
+            await ctx.send(f'{kickedUser.mention} has been kicked')
+            await member_kicked(ctx.guild, kickedUser, ctx.message.author, formattedReason)
+        else:
+            raise Exception(f'{kickedUser} is not in the server')
 
     #mute setup
     @commands.command()
@@ -69,7 +98,7 @@ class Moderation(commands.Cog):
     #mute user
     @commands.command()
     @permissions(mute_members = True)
-    async def mute(self, ctx, member: discord.Member):
+    async def mute(self, ctx, member: discord.Member, *reasonForMute):
         #get mute role from DB
         muteRoleID = await dbselect('main.db', 'SELECT mute_role FROM servers WHERE server=?', (ctx.guild.id,))
         #check if !mutesetup was run
@@ -88,12 +117,16 @@ class Moderation(commands.Cog):
             raise Exception(f'{member.name} is already muted')
         else:
             await member.add_roles(muteRole)
+            formattedReason = ' '.join(reasonForMute)
+            if not formattedReason:
+                formattedReason = 'None Provided'
+            await member_mute(ctx.guild, muteRole, member, ctx.message.author, formattedReason)
 
 
     #unmute user
     @commands.command()
     @permissions(mute_members = True)
-    async def unmute(self, ctx, member: discord.Member):
+    async def unmute(self, ctx, member: discord.Member, *reasonForUnmute):
         #get mute role from DB
         muteRoleID = await dbselect('main.db', 'SELECT mute_role FROM servers WHERE server=?', (ctx.guild.id,))
         #check if !mutesetup was run
@@ -109,6 +142,10 @@ class Moderation(commands.Cog):
         if muteRole in member.roles:
             #remove role from user
             await member.remove_roles(muteRole)
+            formattedReason = ' '.join(reasonForUnmute)
+            if not formattedReason:
+                formattedReason = 'None Provided'
+            await member_unmute(ctx.guild, muteRole, member, ctx.message.author, formattedReason)
         else:
             raise Exception(f"{member.name} isn't muted")
 
