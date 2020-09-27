@@ -28,8 +28,6 @@ class Log(commands.Cog):
     #message edited
     @commands.Cog.listener()
     async def on_message_edit(self, messageOLD, messageNEW):
-        if messageNEW.author == self.bot.user:
-            return
         logChannel = await getLogChannel(messageNEW.guild)
         if logChannel is None:
             return
@@ -44,8 +42,6 @@ class Log(commands.Cog):
     #message deleted
     @commands.Cog.listener()
     async def on_message_delete(self, message):
-        if message.author == self.bot.user:
-            return
         logChannel = await getLogChannel(message.guild)
         if logChannel is None:
             return
