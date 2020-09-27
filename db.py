@@ -1,4 +1,5 @@
 import aiosqlite
+from discord.utils import get
 
 #Grab data from DB
 async def dbselect(db, sql, variables):
@@ -41,3 +42,13 @@ async def is_in_database(*, sql):
     if check is None:
         return False
     return True
+
+async def getLogChannel(guild):
+        logChannelDB = await dbselect('main.db', 'SELECT log_channel FROM servers WHERE server=?', (guild.id,))
+        logChannel = get(guild.channels, id = logChannelDB)
+        if logChannelDB is None:
+            return
+        elif logChannel is None:
+            return
+        else:
+            return logChannel
