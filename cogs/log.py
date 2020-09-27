@@ -73,8 +73,6 @@ class Log(commands.Cog):
             description = f'Mass delete by: {memberWhoPurged.mention}\nMessages deleted: {len(messages)}',
             color = 0xe8a415)
         for m in messages:
-            if m.author == self.bot.user:
-                return
             if len(m.attachments) > 0 :
                 newlist = []
                 for a in m.attachments:
