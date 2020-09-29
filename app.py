@@ -11,7 +11,7 @@ intents.reactions = True
 
 
 bot = commands.Bot(command_prefix='!', case_insensitive=True, intents=intents)
-initCogs = ['cogs.error', 'cogs.events', 'cogs.moderation', 'cogs.log'] #All default cogs that load on startup
+initCogs = ['cogs.error', 'cogs.events', 'cogs.moderation', 'cogs.log', 'cogs.info'] #All default cogs that load on startup
 
 #Event for when the bot comes online
 @bot.event
