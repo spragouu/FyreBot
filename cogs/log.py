@@ -31,7 +31,11 @@ class Log(commands.Cog):
         logChannel = await getLogChannel(messageNEW.guild)
         if logChannel is None:
             return
-
+        elif messageOLD.content == '' or messageNEW.content == '':
+            return
+        elif messageOLD.author.bot:
+            return
+            
         embed = discord.Embed(title = "Message Edited", 
             description = f'Edited by: {messageNEW.author.mention}', 
             color=0xe8a415)
