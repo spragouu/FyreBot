@@ -2,8 +2,15 @@ import discord
 from discord.ext import commands
 from db import is_in_database, dbupdate
 import config
+intents = discord.Intents()
+intents.members = True
+intents.guilds = True
+intents.bans = True
+intents.messages = True
+intents.reactions = True
 
-bot = commands.Bot(command_prefix='!', case_insensitive=True)
+
+bot = commands.Bot(command_prefix='!', case_insensitive=True, intents=intents)
 initCogs = ['cogs.error', 'cogs.events', 'cogs.moderation', 'cogs.log'] #All default cogs that load on startup
 
 #Event for when the bot comes online
