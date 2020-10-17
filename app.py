@@ -64,5 +64,13 @@ async def reload(ctx, extension):
     bot.unload_extension(f'cogs.{extension}')
     bot.load_extension(f'cogs.{extension}')
 
+@bot.command()
+async def ping(ctx):
+    '''Pong! Get the bot's response time'''
+    em = discord.Embed(color=0xEE7700)
+    em.title = "Pong!"
+    em.description = f'{round(bot.latency * 1000, 1)} ms'
+    await ctx.send(embed=em) 
+
 #Log bot into discord
 bot.run(config.token)
