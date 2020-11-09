@@ -20,7 +20,7 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
-        await member.guild.system_channel.send(f'{member.mention} has left {member.guild.name}')
+        await member.guild.system_channel.send(f'`{member}` has left {member.guild.name}')
     
     @commands.Cog.listener()
     async def on_guild_update(self, guildOLD, guildNEW):
