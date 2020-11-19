@@ -10,6 +10,13 @@ class Log(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    async def permissionsCheck(self, ctx):
+        original = commands.has_permissions(administrator=True).predicate
+        if ctx.guild.owner_id == ctx.author.id or ctx.author.id in ctx.bot.owner_ids or await original(ctx):
+            return True
+        await ctx.send("You do not have permissions to do that.", delete_after=10)
+        return False
+
     @commands.command()
     async def setup(self, ctx, logChannel: discord.TextChannel):
         #Get log_channel value from DB

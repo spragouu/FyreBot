@@ -47,18 +47,21 @@ async def on_command_completion(ctx):
 
 #Manually load a cog
 @bot.command()
+@commands.is_owner()
 async def load(ctx, extension):
     """Load a specific cog"""
     bot.load_extension(f'cogs.{extension}')
     
 #Manually unload a cog
 @bot.command()
+@commands.is_owner()
 async def unload(ctx, extension):
     """Unload a specific cog"""
     bot.unload_extension(f'cogs.{extension}')
 
 #Manually reload a cog
 @bot.command()
+@commands.is_owner()
 async def reload(ctx, extension):
     """Reload a specific cog"""
     bot.unload_extension(f'cogs.{extension}')
