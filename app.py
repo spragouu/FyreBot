@@ -49,27 +49,27 @@ async def on_command_completion(ctx):
 @bot.command()
 @commands.is_owner()
 async def load(ctx, extension):
-    """Load a specific cog"""
+    '''Load a specific cog'''
     bot.load_extension(f'cogs.{extension}')
     
 #Manually unload a cog
 @bot.command()
 @commands.is_owner()
 async def unload(ctx, extension):
-    """Unload a specific cog"""
+    '''Unload a specific cog'''
     bot.unload_extension(f'cogs.{extension}')
 
 #Manually reload a cog
 @bot.command()
 @commands.is_owner()
 async def reload(ctx, extension):
-    """Reload a specific cog"""
+    '''Reload a specific cog'''
     bot.unload_extension(f'cogs.{extension}')
     bot.load_extension(f'cogs.{extension}')
 
 @bot.command()
 async def ping(ctx):
-    '''Pong! Get the bot's response time'''
+    '''Get the bot's response time'''
     em = discord.Embed(color=0xEE7700)
     em.title = "Pong!"
     em.description = f'{round(bot.latency * 1000, 1)} ms'

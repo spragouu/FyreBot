@@ -7,6 +7,7 @@ class Info(commands.Cog):
 
     @commands.command()
     async def info(self, ctx):
+        '''Show information about the bot'''
         embed = discord.Embed(color=0xEE7700)
         embed.set_author(name='FyreBot', icon_url=self.bot.user.avatar_url)
         embed.add_field(name="Language", value="[Python](https://discord.gg/python) | [Discord.py](https://discord.gg/dpy)", inline=False)

@@ -15,7 +15,7 @@ class Welcome(commands.Cog):
 
     @commands.command(usage = '<YourRolesChannel> <YourWelcomeChannel>')
     async def welcome(self, ctx, roleChannel: discord.TextChannel, channel: discord.TextChannel):
-        """Send the server's welcome/info message to a specific channel"""
+        '''Send the server's welcome/info message to a specific channel'''
         imgPath = Path("./images/")
         if channel is None:
             channel = ctx

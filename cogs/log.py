@@ -19,6 +19,7 @@ class Log(commands.Cog):
 
     @commands.command()
     async def setup(self, ctx, logChannel: discord.TextChannel):
+        '''Setup logging in the server'''
         #Get log_channel value from DB
         dbLogChannelID = await dbselect('main.db', 'SELECT log_channel FROM servers WHERE server=?', (ctx.guild.id,))
         #Check to see if the DB returned a value or None

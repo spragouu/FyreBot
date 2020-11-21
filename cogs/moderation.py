@@ -21,6 +21,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @permissions(ban_members = True)
     async def ban(self, ctx, bannedUser: discord.User, *reasonForBan):
+        '''Ban a user'''
         for e in await ctx.guild.bans():
             if e.user == bannedUser:
                 raise Exception(f'{bannedUser} is already banned')
@@ -37,6 +38,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @permissions(ban_members = True)
     async def unban(self, ctx, unbannedUser: discord.User, *reasonForUnban):
+        '''Unban a user'''
         for e in await ctx.guild.bans():
             if e.user == unbannedUser:
                 formattedReason = ' '.join(reasonForUnban)
@@ -54,6 +56,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @permissions(kick_members = True)
     async def kick(self, ctx, kickedUser: discord.User, *reasonForKick):
+        '''Kick a user'''
         if kickedUser in ctx.guild.members:
             formattedReason = ' '.join(reasonForKick)
             if not formattedReason:
@@ -69,6 +72,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @permissions(administrator = True)
     async def muteSetup(self, ctx):
+        '''Setup the mute role and permissions'''
         #Check to make sure the mute role isn't already setup
         muteRoleID = await dbselect('main.db', 'SELECT mute_role FROM servers WHERE server=?', (ctx.guild.id,))
 
@@ -99,6 +103,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @permissions(mute_members = True)
     async def mute(self, ctx, member: discord.Member, *reasonForMute):
+        '''Mute a user'''
         #get mute role from DB
         muteRoleID = await dbselect('main.db', 'SELECT mute_role FROM servers WHERE server=?', (ctx.guild.id,))
         #check if !mutesetup was run
@@ -127,6 +132,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @permissions(mute_members = True)
     async def unmute(self, ctx, member: discord.Member, *reasonForUnmute):
+        '''Unmute a user'''
         #get mute role from DB
         muteRoleID = await dbselect('main.db', 'SELECT mute_role FROM servers WHERE server=?', (ctx.guild.id,))
         #check if !mutesetup was run
@@ -153,6 +159,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @permissions(manage_messages = True)
     async def purge(self, ctx, amount: int):
+        '''Delete a specified number of messages'''
         await ctx.channel.purge(limit = amount+1)
 
 
