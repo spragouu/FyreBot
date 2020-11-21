@@ -6,7 +6,7 @@ class Welcome(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    async def permissionsCheck(self, ctx):
+    async def cog_check(self, ctx):
         original = commands.has_permissions(administrator=True).predicate
         if ctx.guild.owner_id == ctx.author.id or ctx.author.id in ctx.bot.owner_ids or await original(ctx):
             return True
