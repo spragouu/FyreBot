@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 from pathlib import Path
+from db import dbupdate, dbselect
+from discord.utils import get
 
 class Welcome(commands.Cog):
     def __init__(self, bot):
@@ -12,6 +14,22 @@ class Welcome(commands.Cog):
             return True
         await ctx.send("You do not have permissions to do that.", delete_after=10)
         return False
+
+    @commands.command()
+    async def setWelcome(self, ctx, welcomeChannel: discord.TextChannel):
+        '''Set the welcome channel '''
+        #Get welcome_channel value from DB
+        dbWelcomeChannelID = await dbselect('main.db', 'SELECT welcome_channel FROM servers WHERE server=?', (ctx.guild.id,))
+        #Check to see if the DB returned a value or None
+        if dbWelcomeChannelID is not None:
+            #Check if the db channel is in the server
+            if get(ctx.guild.channels, id = dbWelcomeChannelID) is not None:
+                    raise Exception(f'{ctx.guild.name} already has a welcome channel setup')
+
+        #Set welcome channel in DB
+        await dbupdate('main.db', 'UPDATE servers SET welcome_channel=? WHERE server=?', (welcomeChannel.id, ctx.guild.id))
+        #Send confirmation message
+        await ctx.send('```✅ Success:\n    ↪️ Welcome channel assigned```')
 
     @commands.command(usage = '<YourRolesChannel> <YourWelcomeChannel>')
     async def welcome(self, ctx, roleChannel: discord.TextChannel, channel: discord.TextChannel):
