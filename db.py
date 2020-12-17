@@ -52,3 +52,13 @@ async def getLogChannel(guild):
             return
         else:
             return logChannel
+
+async def getWelcomeChannel(guild):
+        welcomeChannelDB = await dbselect('main.db', 'SELECT welcome_channel FROM servers WHERE server=?', (guild.id,))
+        welcomeChannel = get(guild.channels, id = welcomeChannelDB)
+        if welcomeChannelDB is None:
+            return
+        elif welcomeChannel is None:
+            return
+        else:
+            return welcomeChannel

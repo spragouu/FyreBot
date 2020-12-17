@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
 import aiosqlite
-from db import dbupdate
+from db import dbupdate, getWelcomeChannel
+from discord.utils import get
 
 class Events(commands.Cog):
     def __init__(self, bot):
@@ -16,7 +17,11 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        await member.guild.system_channel.send(f'Welcome {member.mention} to {member.guild.name}')
+        welcomeChannel = await getWelcomeChannel(member.guild)
+        if welcomeChannel is None:
+            await member.guild.system_channel.send(f'Welcome {member.mention} to {member.guild.name}')
+        else:
+            await member.guild.system_channel.send(f'Welcome {member.mention} to {member.guild.name}!\nHead over to {welcomeChannel.mention} to get started!')
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
