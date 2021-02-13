@@ -38,16 +38,20 @@ class Welcome(commands.Cog):
         if channel is None:
             channel = ctx
         
-        await channel.send(file = discord.File(imgPath / 'Welcome.png'))
-        await channel.send(file = discord.File(imgPath / 'Divider.png'))
+        await channel.send(file = discord.File(imgPath / 'Welcome Neon.png'))
+        await channel.send(file = discord.File(imgPath / 'Divider Neon.png'))
 
-        await channel.send('Welcome to the DeadFyre discord server!\nTo get started head over to #dev to select your proper roles.\n\n__**Server Rules**__\n\n- The one rule is Use Common Sense. Things like spamming, Not using proper channels, arguing or causing drama, excessive swearing, racism, and so on.\nThis rule will be enforced at our discretion.')
+        await channel.send("This is a community created by spragouu for friends to hang out, all with the common interests of video games and tech.\n\nInitially DeadFyre was a project spragouu started that had no end goal and to this day still remains a mystery of its true purpose. Since it has evolved it has been used as a team name used in various competitions, predominantly in Rocket League, and it's main purpose now is this discord community.\n\nIf you're here you're probably a friend of spragouu or you have a mutual friend. Whatever the case, welcome, enjoy your stay and have fun.")
 
-        await channel.send(file = discord.File(imgPath / 'Divider.png'))
+        await channel.send(file = discord.File(imgPath / 'Divider Neon.png'))
 
-        await channel.send('__**Links**__\n\nWebsite: https://deadfyre.com/\nDiscord: https://discord.gg/uaxgEhu')
+        await channel.send(f"The first step to begin interacting within the server is to get yourself some roles.\nHead over to {roleChannel.mention} to setup your server roles!")
 
-        await channel.send(file = discord.File(imgPath / 'Divider.png'))
+        await channel.send(file = discord.File(imgPath / 'Divider Neon.png'))
+
+        await channel.send("Discord: https://discord.gg/uaxgEhu")
+
+        await channel.send(file = discord.File(imgPath / 'Divider Neon.png'))
 
 def setup(bot):
     bot.add_cog(Welcome(bot))
