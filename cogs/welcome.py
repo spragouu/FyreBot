@@ -41,7 +41,7 @@ class Welcome(commands.Cog):
         await channel.send(file = discord.File(imgPath / 'Welcome Neon.png'))
         await channel.send(file = discord.File(imgPath / 'Divider Neon.png'))
 
-        await channel.send("This is a community created by spragouu for friends to hang out, all with the common interests of video games and tech.\n\nInitially DeadFyre was a project spragouu started that had no end goal and to this day still remains a mystery of its true purpose. Since it has evolved it has been used as a team name used in various competitions, predominantly in Rocket League, and it's main purpose now is this discord community.\n\nIf you're here you're probably a friend of spragouu or you have a mutual friend. Whatever the case, welcome, enjoy your stay, and have fun.")
+        await channel.send("This is a community created by spragouu for friends to hang out, all with the common interests of video games and tech.\n\nInitially DeadFyre was a project spragouu started that had no end goal and to this day still remains a mystery of its true purpose. Since, it has evolved and has been used as a team name in various competitions, predominantly in Rocket League, and it's main purpose now is this discord community.\n\nIf you're here you're probably a friend of spragouu or you have a mutual friend. Whatever the case, welcome, enjoy your stay, and have fun.")
 
         await channel.send(file = discord.File(imgPath / 'Divider Neon.png'))
 
